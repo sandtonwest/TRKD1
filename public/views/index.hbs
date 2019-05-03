@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TRKD Widgets</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<style>
+		@charset "UTF-8";
+		#chart { width: 400px; height: 300px;}
+
+		.quote1	{ width: 500px; margin: 10px; display: inline; float: left;}
+		.quote1 .hdr { font-weight: bold; background-color: #ffb76c; padding: 10px;}
+		.quote1 .pt	{ width: 48%; border-bottom: 1px dotted; float: left; height: 20px;}
+		.quote1 .pt:nth-child(odd)	{ float: right; }
+		.quote1 .lb	{ font-weight: bold; }
+		.quote1 .vl { float:right; }
+
+		#fContent .pt	{ width: 49%; float: left; border-right: 1px solid;}
+		#fContent .pt:nth-child(odd)	{ float: right; }
+		#fContent .hdr { font-weight: bold; background-color: #ffd7af; padding: 10px;}
+		#fContent .hdr .lb { font-weight: bold; }
+		#fContent .hdr .vl {float: right;}
+		#fContent .pt .lb	{ font-weight: bold; display: block;}
+		#fContent .pt .vl {color: #0000AA; display: block; padding-left: 10%;}
+		.ui-tabs .ui-tabs-nav li { white-space: nowrap; display: inline; }
+		.ui-tabs .ui-tabs-nav li a { text-decoration: none; padding: 10px; }
+	</style>
+</head>
+<body>
+	<h2>TRKD Widgets page</h2>
+
+	<div>
+		Enter RIC: <input type="text" name="ric" value="TRI.N" id="ricBox"> <input type="button" value="Submit" id="subBtn">
+	</div>
+
+	<div class="ticker1">
+
+		<table class="bidTable" border="1">
+
+			<tbody>
+				<tr>
+					<td>
+						<div class="bidHolder">
+							<div class="bidSpace1">
+								space
+							</div>
+							<div class="bidSpace2">
+								Bid
+
+							</div>
+							<div class="bidSpace3">
+								<img <img class="ticker_image" src="../../img/up-tick.png"  alt="Girl in a jacket" >
+
+							</div>
+
+						</div>
+
+					</td>
+
+					<td>
+						<div class="askHolder">
+							<div class="askSpace1">
+								space
+							</div>
+							<div class="askSpace2">
+								Bid
+
+							</div>
+							<div class="askSpace3">
+								<img <img class="ticker_image" src="../../img/down-tick.png"  alt="Girl in a jacket" >
+
+							</div>
+
+						</div>
+
+					</td>
+
+
+				</tr>
+				<tr>
+					<td>1.006</td>
+					<td>1.008</td>
+
+			</tbody>
+
+
+			</tr>
+		</table>
+		ff
+
+	</div>
+
+	<div id="quote"></div>
+	<img id="chart" />
+	<hr/>
+
+	<div id="fundamentals">
+		<ul>
+			<li><a href="#income">Income</a></li>
+			<li><a href="#balance">Balance</a></li>
+			<li><a href="#cashflow">Cash Flow</a></li>
+		</ul>
+		<div id="fContent">
+			<div id="income">Income Statement</div>
+			<div id="balance">Balance Statement</div>
+			<div id="cashflow">Cash Flow Statement</div>
+		</div>
+	</div>
+
+<script>
+	$(function() {
+		$("#subBtn").click(() => {
+			// get the ric from textbox
+			var ric = $("#ricBox").val();
+			if(ric)	{
+				// get and display the quotes widget
+				$("#quote").load("/api/quoteWidget?ric=" + ric);
+
+				// get chart
+				$.get("/api/chartWidget?ric=" + ric, data => $("#chart").attr("src", data));
+
+				// get financial statements
+				$("#fContent").load("/api/statementsWidget?ric=" + ric, () => {$("#fundamentals").tabs("refresh")});
+			}
+		});
+
+		// display financial data in tabbed form
+		$("#fundamentals").tabs();
+	});
+</script>
+
+</body>
+</html>

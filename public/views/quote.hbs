@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="refresh" content="10">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<!-- <script src="../../public/js/jquery-3.3.1.js"></script> -->
+
+
+	<!-- </script> -->
+
+	<script type="text/javascript">
+	var counter = 0;
+
+
+	//var divcon = `<table width="100%"><tr><th>BID</th><th>ASK</th><th>TIME</th></tr><tr><td rowspan="3" align="center" class="BID" id="BID">{{BID}} </td><td rowspan="3" align="center" class="BID">{{ASK}} </td><td rowspan="3" align="center" class="BID">{{CF_TIME}}</td></tr></table>`;
+
+
+
+
+	function refreshDiv(){
+					// window.location.reload(location.href);
+					console.log("refreshing..");
+					//$("#container").load("/quote");
+					// $( "#container").unload(function() {
+  				// 	return "Handler for .unload() called.";
+					// });
+
+
+					// $("#container").load("/quote");
+					// $('#content').html(location.href);
+					// $("#container").load(location.href);
+					var BID = {{BID}};
+					var deb = `{{debug "KAWA"}}`;
+					console.log("TIMES", deb);
+
+
+
+
+					// document.getElementById("BID").innerHTML = BID + "i";
+					console.log(location.href);
+					console.log("reloaded");
+
+
+	 		};
+
+
+					//console.log(BID);
+					 //counter = counter + 1;
+					 //console.log(counter);
+					 //console.log("reloaded", counter);
+
+
+					 //$("#container").empty();
+
+					 // $("#container").load(location.href);
+
+
+
+
+
+	// window.setInterval("refreshDiv()", 6000);
+
+
+
+
+</script>
+
+		<style>
+		#container{width:270px; heigth: 90px; border: 1px solid #000;
+				background-color: #000; overflow: hidden; border-radius: 2px; color: #fefdfb;}
+				.BID{
+					font-size: 20px;
+					color : {{color}};
+				}
+
+				table, td, tr{
+					border: 1px solid #94D600;
+				}
+				table td {
+    			width: 60px;
+    			overflow: hidden;
+    			/* display: inline-block; */
+    			white-space: nowrap;
+				}
+				table{
+					overflow: hidden;
+
+				}
+
+		</style>
+		<title>BANGER!</title>
+</head>
+<body>
+
+	<div id="container">
+		<!-- <h1>{{BID}} {{ASK}}</h1> -->
+		<table width="100%">
+			<tr>
+				<th>BID</th>
+				<th>ASK</th>
+				<th>TIME</th>
+			</tr>
+			<tr>
+				<td rowspan="3" align="center" class="BID" id="BID">{{BID}} </td>
+				<td rowspan="3" align="center" class="BID">{{ASK}} </td>
+				<td rowspan="3" align="center" class="BID">{{CF_TIME}}</td>
+			</tr>
+
+
+		</table>
+	</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+[object Object]
+undefined
+undefined
+{ Fault:
+   { Code: { Value: 's:Receiver', Subcode: [Object] },
+     Reason: { Text: [Object] },
+     Detail: { ClientErrorReference: [Object] } } }
