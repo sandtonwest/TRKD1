@@ -110,7 +110,7 @@ auth_controller.authenticate(process.env.user, process.env.password, process.env
 
     console.log("Starting HTTP server...");
     // start the http server
-    server = app.listen(port, function(){
+    server = app.listen(process.env.PORT || 3000, function(){
       console.log("Node server HTTP started on: " + port);
     });
 
