@@ -65,21 +65,21 @@ console.log("7777777777777", req.url, appId);
           NAME: getField("CF_NAME"),
           F_COLOR: function(){
             if(getField("BID_1") > getField("CF_BID")){
-              return "#f32836"
+              return "#f32836";
 
             }else if(getField("BID_1") < getField("CF_BID")){
               return "#94D600";
             }else{
-              return "#ffce00"
+              return "#ffce00";
             }
           },
           CF_TIME: getField("CF_TIME")
         };
 
-        console.log("MADANTIN!!!!!!!!!!!!!!!!!!@",getField("BID_1"));
+        console.log("MADANTIN!!!!!!!!!!!!!!!!!!@",data["F_COLOR"]());
         // res.render("quote", {BID: data["BID"],ASK: data["ASK"], color: data["F_COLOR"], CF_TIME: data["CF_TIME"]});
         // res.send({BID: data["BID"],ASK: data["ASK"], color: data["F_COLOR"], CF_TIME: data["CF_TIME"]});
-        res.json({BID: data["BID"],ASK: data["ASK"], color: data["F_COLOR"], CF_TIME: data["CF_TIME"]});
+        res.json({BID: data["BID"],ASK: data["ASK"], color: data["F_COLOR"](), CF_TIME: data["CF_TIME"]});
         // res.status
 
         delete data;
