@@ -5,6 +5,7 @@ const fs = require("fs");
 const url = require("url");
 const auth_controller = require("./lib/trkd-authenticator");
 const quoteWidget = require("./lib/trkd-q");
+
 const news_headline_Widget = require("./lib/trkd-news-headlines");
 const TokenEvent = require("./lib/tokenEvent_controller");
 
@@ -47,10 +48,12 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var quote = require('./routes/quote');
+var multiQuote = require('./routes/multi_quote');
 var news_headlines = require('./routes/news_headlines');
 var index = require('./routes/index');
 var test = require('./routes/test');
 var chart = require('./routes/chart');
+var timeseries = require('./routes/timeseries');
 
 console.log(process.env.name, process.env.password);
 
@@ -59,10 +62,12 @@ const port = process.env.httpPort || 3000;
 
 
 app.use("/", quote);
+app.use("/", multiQuote);
 app.use("/", news_headlines);
 app.use("/", index);
 app.use("/test", test);
 app.use("/", chart);
+app.use("/", timeseries);
 
 //quoteWidget.getQuoteDiv("ZAR=");
 
@@ -100,6 +105,10 @@ const chartWidget = require("./lib/cht");
 console.log("Requesting API authorization token...");
 console.log(process.env.user, process.env.password, process.env.applicationID);
 
+server = app.listen(process.env.PORT || 3000, function(){
+  console.log("Node server HTTP started on: " + port);
+
+
 auth_controller.authenticate(process.env.user, process.env.password, process.env.applicationID)
   .then(token => {
     // successful authentication, keep a global copy of appID and token
@@ -110,21 +119,24 @@ auth_controller.authenticate(process.env.user, process.env.password, process.env
 
     console.log("Starting HTTP server...");
     // start the http server
-    server = app.listen(process.env.PORT || 3000, function(){
-      console.log("Node server HTTP started on: " + port);
-    });
+
 
   })
   .catch(err => {
     console.log("Unable to get authentication token. Please check username/password");
     console.log("");
     console.log("Received error: ", err);
+    server.close();
+    server.start();
+    reload(app);
+
     if(err.errno){
       // server.close();
       console.log("Error with Error num",err.errno);
 
     }else if(err){
       // server.close();
+      console.log("ERROR", err);
 
     }
   });
@@ -136,10 +148,10 @@ function setToken(){
   auth_controller.authenticate(process.env.user, process.env.password, process.env.applicationID)
   	.then(token => {
   		// successful authentication, keep a global copy of appID and token
-  		global.applicationID = process.env.applicationID;
+  		// global.applicationID = process.env.applicationID;
   		global.token = token;
       TokenEvent.emit("getTokenSuccess", token, process.env.applicationID);
-  		console.log(`Received authorization token: ${token}`);
+  		// console.log(`Received authorization token: ${token}`);
 
   		//console.log("Starting HTTP server...");
   		// start the http server
@@ -150,8 +162,11 @@ function setToken(){
   	})
   	.catch(err => {
   		console.log("Unable to get authentication token. Please check username/password");
-  		console.log("");
-  		console.log("Received error: ", err.errno);
+  		// console.log("");
+  		console.log("Received error: ", err);
+      reload(app);
+      server.start();
+      return Promise.reject("auth problems", err);
       if(err.errno){
         var reload = require('reload')
         server.close();
@@ -177,8 +192,10 @@ setInterval(setToken ,4800000);
 count = 0;
 TokenEvent.on("getTokenSuccess", (token)=>{
   count = count + 1;
-  console.table(["token recie", token , count]);
+  // console.table(["token recie", token , count]);
   setInterval(setToken ,4800000);
+});
+
 });
 
   module.exports = app;
