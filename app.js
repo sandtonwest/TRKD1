@@ -54,11 +54,14 @@ var index = require('./routes/index');
 var test = require('./routes/test');
 var chart = require('./routes/chart');
 var timeseries = require('./routes/timeseries');
+var cors = require('cors');
 
 console.log(process.env.name, process.env.password);
 
 const indexFile = "index.html";
 const port = process.env.httpPort || 3000;
+
+app.use(cors());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
