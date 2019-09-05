@@ -54,7 +54,11 @@ console.log("7777777777777", req.url, appId);
           // console.log("result length", result.length);
           console.log("I AM! ",i);
           // console.log("| I Expect twice   | ",result[i].Fields.Field);
-          fields1.push(result[i].Fields.Field);
+          if(result[i].Fields){
+            fields1.push(result[i].Fields.Field);
+
+          }
+          
 
           console.log("dot name",fields1[0]);
 
