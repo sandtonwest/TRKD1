@@ -81,6 +81,7 @@ console.log("7777777777777", req.url, appId);
         // res.send({BID: data["BID"],ASK: data["ASK"], color: data["F_COLOR"], CF_TIME: data["CF_TIME"]});
         res.json({BID: data["BID"],ASK: data["ASK"], color: data["F_COLOR"](), CF_TIME: data["CF_TIME"]});
         // res.status
+        res.end();
 
         delete data;
         data = null;
