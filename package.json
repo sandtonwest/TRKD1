@@ -16,7 +16,7 @@
     "dotenv": "^6.2.0",
     "electron": "^4.0.3",
     "express": "^4.16.4",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.5.3",
     "hbs": "^4.0.1",
     "querystring": "^0.2.0",
     "reload": "^2.4.0",
